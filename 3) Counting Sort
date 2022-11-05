@@ -1,0 +1,65 @@
+#include<stdio.h>
+void print(int A[],int n)
+{
+    for(int i=0; i<n; i++)
+        printf("\t%d",A[i]);
+}
+int max(int A[],int n)
+{
+    int i=0,k;
+    k=0;
+    for(i=0; i<n; i++)
+    {
+        if(A[i]>k)
+        {
+            k=A[i];
+        }
+    }
+    return k;
+}
+void counting(int A[],int n)
+{
+    int k;
+    k=max(A,n);
+
+    int count[k],B[n],C[n];
+    int i;
+    for(i=0; i<=k; i++)
+    {
+        count[i]=0;
+    }
+    for(i=0; i<n; i++)
+    {
+        count[A[i]]=count[A[i]]+1;
+    }
+    for(i=1; i<=k; i++)
+    {
+        count[i]=count[i]+count[i-1];
+    }
+    for(i=n-1; i>=0; i--)
+    {
+        B[count[A[i]]-1]=A[i];
+        count[A[i]]=count[A[i]]-1;
+    }
+    for(i=0; i<n; i++)
+    {
+        A[i]=B[i];
+    }
+}
+int main()
+{
+    printf("Enter Size of Array : ");
+    int n;
+    scanf("%d",&n);
+    printf("Enter Array Elements : ");
+    int A[n],i;
+    for(i=0; i<n; i++)
+    {
+        scanf("%d",&A[i]);
+    }
+    printf("Before Sorted \n");
+    print(A,n);
+    counting(A,n);
+    printf("\n After Sorted \n");
+    print(A,n);
+}
